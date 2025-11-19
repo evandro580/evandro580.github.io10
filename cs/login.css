@@ -1,0 +1,998 @@
+/* ===== RESET E CONFIGURAÇÕES GERAIS ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Merriweather', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== ESTILOS DO CORPO ===== */
+body {
+  background: linear-gradient(68.15deg, #1a0e3f 16.62%, #2a1a5e 85.61%);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* ===== LINKS ===== */
+a {
+  color: #d1cfe2;
+  transition: color 0.3s ease-in-out;
+}
+
+a:hover,
+a:focus {
+  color: #ffffff;
+  text-decoration: underline;
+  outline: none;
+}
+
+/* ===== CONTAINER PRINCIPAL ===== */
+.main-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ===== CAIXA DE LOGIN ===== */
+.login_box {
+  position: relative;
+  width: 100%;
+  background: rgba(26, 14, 63, 0.95);
+  border: 4px solid #2a1a5e;
+  border-radius: 15px;
+  padding: 6em 2em 3em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login_box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(74, 43, 140, 0.5);
+}
+
+/* ===== CABEÇALHO DO LOGIN ===== */
+.login-header {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4a3b9b;
+  width: 160px;
+  height: 60px;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.login-header h1 {
+  font-size: 28px;
+  font-weight: bold;
+  font-style: italic;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-family: 'Merriweather', serif;
+}
+
+.login-header::before,
+.login-header::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+}
+
+.login-header::before {
+  left: -30px;
+  border-top-right-radius: 50%;
+  box-shadow: 15px 0 0 0 #4a3b9b;
+}
+
+.login-header::after {
+  right: -30px;
+  border-top-left-radius: 50%;
+  box-shadow: -15px 0 0 0 #4a3b9b;
+}
+
+/* ===== FORMULÁRIO ===== */
+.login-form {
+  width: 100%;
+}
+
+/* ===== CONTAINER DE INPUT ===== */
+.input_box {
+  position: relative;
+  margin: 20px 0;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.input_box:hover {
+  transform: translate(-4px, -4px);
+}
+
+.input_box:hover .input-field {
+  box-shadow: 12px 12px 0 #1a0e3f;
+}
+
+/* ===== CAMPOS DE ENTRADA ===== */
+.input-field {
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  background: #fff;
+  color: #1a0e3f;
+  padding: 0 60px 0 15px;
+  border: 4px solid #1a0e3f;
+  border-radius: 8px;
+  box-shadow: 8px 8px 0 #1a0e3f;
+  transition: all 0.3s ease;
+  outline: none;
+  position: relative;
+  z-index: 1;
+  font-family: 'Merriweather', serif;
+}
+
+.input-field::placeholder {
+  color: transparent;
+}
+
+.input-field:not(:placeholder-shown) {
+  background: #fff;
+  color: #1a0e3f;
+}
+
+.input_box:focus-within {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* CAMPO NORMAL (SEM ERRO) - BRANCO */
+.input-field:focus {
+  background: #ffffff;
+  color: #1a0e3f;
+  border-color: #d1cfe2;
+}
+
+.input-field:focus::placeholder {
+  color: #1a0e3f;
+}
+
+/* CAMPO COM ERRO - VERMELHO APENAS QUANDO HOUVER ERRO E O FORMULÁRIO FOR SUBMETIDO */
+.input-field.submitted.error {
+  border-color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #1a0e3f;
+}
+
+.input-field.submitted.error:focus {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: #ff6b6b;
+  color: #1a0e3f;
+}
+
+/* ===== LABELS - MAIS PARA CIMA DENTRO DO CAMPO ===== */
+.label {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  color: #1a0e3f;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+  padding: 0 8px;
+  z-index: 2;
+  line-height: 1;
+  font-family: 'Merriweather', serif;
+}
+
+/* Quando o campo está focado ou tem conteúdo - LABEL SOBE */
+.input-field:focus ~ .label,
+.input-field:not(:placeholder-shown) ~ .label {
+  top: -12px;
+  left: 10px;
+  font-size: 13px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #4a3b9b, #2a1a5e);
+  border-radius: 12px;
+  box-shadow: 
+    0 3px 8px rgba(74, 59, 155, 0.4),
+    0 0 0 2px #d1cfe2;
+  padding: 4px 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transform: translateY(0) scale(0.95);
+  animation: labelFloat 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.input-field:focus ~ .label {
+  color: #ffffff;
+  background: linear-gradient(135deg, #5a4bab, #3a2a7e);
+  box-shadow: 
+    0 4px 12px rgba(90, 75, 171, 0.5),
+    0 0 0 2px #ffffff,
+    0 0 15px rgba(209, 207, 226, 0.6);
+}
+
+/* Label em campo com erro APENAS quando submetido */
+.input-field.submitted.error ~ .label {
+  color: #ff6b6b;
+}
+
+.input-field.submitted.error:focus ~ .label,
+.input-field.submitted.error:not(:placeholder-shown) ~ .label {
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff6b6b, #ff4757);
+  box-shadow: 
+    0 3px 8px rgba(255, 107, 107, 0.4),
+    0 0 0 2px #ff6b6b;
+}
+
+/* ===== ÍCONES - MAIS PARA CIMA DENTRO DO CAMPO ===== */
+.icon {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 18px;
+  color: #1a0e3f;
+  transition: all 0.3s ease;
+  z-index: 3;
+  line-height: 1;
+}
+
+/* Ícones ficam normais quando o campo está em foco */
+.input-field:focus ~ .icon {
+  color: #4a3b9b;
+  transform: scale(1.1);
+}
+
+/* Ícones em campo com erro APENAS quando submetido */
+.input-field.submitted.error ~ .icon {
+  color: #ff6b6b;
+}
+
+.input-field.submitted.error:focus ~ .icon {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+.show-icon {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  font-size: 18px;
+  color: #1a0e3f;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 3;
+  line-height: 1;
+}
+
+/* Ícone de mostrar senha normal quando o campo está em foco */
+.input-field:focus ~ .show-icon {
+  color: #4a3b9b;
+  transform: scale(1.1);
+}
+
+/* Ícone de mostrar senha em campo com erro APENAS quando submetido */
+.input-field.submitted.error ~ .show-icon {
+  color: #ff6b6b;
+}
+
+.input-field.submitted.error:focus ~ .show-icon {
+  color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+.show-icon:hover,
+.show-icon:focus {
+  color: #4a3b9b;
+  transform: scale(1.2);
+}
+
+/* ===== MENSAGENS DE ERRO ===== */
+.error-message {
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  min-height: 18px;
+  padding-left: 15px;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-family: 'Merriweather', serif;
+}
+
+/* Mensagem de erro aparece apenas quando há erro E o formulário foi submetido */
+.input-field.submitted.error ~ .error-message {
+  opacity: 1;
+}
+
+/* ===== LEMBRAR-ME E ESQUECEU A SENHA ===== */
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.remember-me input[type="checkbox"] {
+  accent-color: #4a3b9b;
+  transform: scale(1.2);
+}
+
+.remember-me label {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  font-family: 'Merriweather', serif;
+}
+
+.forgot a {
+  color: #d1cfe2;
+  font-weight: 500;
+  font-family: 'Merriweather', serif;
+}
+
+.forgot a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* ===== BOTÃO DE ENVIO ===== */
+.input-submit {
+  width: 100%;
+  height: 50px;
+  background: #4a3b9b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease, transform 0.2s ease;
+  letter-spacing: 0.5px;
+  position: relative;
+  font-family: 'Merriweather', serif;
+}
+
+.input-submit:hover,
+.input-submit:focus {
+  background: #2a1a5e;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(42, 26, 94, 0.4);
+}
+
+.input-submit:active {
+  transform: scale(0.95);
+}
+
+.input-submit.loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.input-submit.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+/* ===== LOGIN SOCIAL ===== */
+.social-login-title {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+  color: #d1cfe2;
+  position: relative;
+  font-family: 'Merriweather', serif;
+}
+
+.social-login-title::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 30%;
+  height: 1px;
+  background: #d1cfe2;
+  transform: translateY(-50%);
+}
+
+.social-login-title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 30%;
+  height: 1px;
+  background: #d1cfe2;
+  transform: translateY(-50%);
+}
+
+.social-login {
+  text-align: center;
+  margin: 25px 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #1a0e3f;
+  border-radius: 50%;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.social-button:hover,
+.social-button:focus {
+  transform: translateY(-5px);
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.social-button:active {
+  transform: scale(0.95);
+}
+
+.social-button.loading {
+  pointer-events: none;
+}
+
+.social-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+.social-button.loading i {
+  opacity: 0;
+}
+
+.google-button {
+  background: #ffffff;
+}
+
+.google-button .google-icon {
+  font-size: 24px;
+  color: #4285F4;
+}
+
+.google-button:hover {
+  background: #4285F4;
+}
+
+.google-button:hover .google-icon {
+  color: #ffffff;
+}
+
+.microsoft-button {
+  background: #ffffff;
+}
+
+.microsoft-button .microsoft-icon {
+  font-size: 24px;
+  color: #00A4EF;
+}
+
+.microsoft-button:hover {
+  background: #00A4EF;
+}
+
+.microsoft-button:hover .microsoft-icon {
+  color: #ffffff;
+}
+
+/* ===== REGISTRO ===== */
+.register {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  font-family: 'Merriweather', serif;
+}
+
+/* ===== MODAIS DE LOGIN SOCIAL ===== */
+.social-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.social-modal.active {
+  display: flex;
+  animation: modalFadeIn 0.3s ease;
+}
+
+.social-modal-content {
+  background: linear-gradient(135deg, #1a0e3f, #2a1a5e);
+  border: 3px solid #4a3b9b;
+  border-radius: 15px;
+  padding: 2em;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  animation: modalScaleIn 0.3s ease forwards;
+}
+
+.social-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+  border-bottom: 2px solid #4a1a5e;
+  padding-bottom: 1em;
+}
+
+.social-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: 'Merriweather', serif;
+}
+
+.social-provider-icon {
+  font-size: 24px;
+}
+
+.google-provider .social-provider-icon {
+  color: #4285F4;
+}
+
+.microsoft-provider .social-provider-icon {
+  color: #00A4EF;
+}
+
+.social-modal-close {
+  background: none;
+  border: none;
+  color: #d1cfe2;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-modal-close:hover {
+  color: #ff6b6b;
+}
+
+/* ===== OPÇÕES DE LOGIN SOCIAL ===== */
+.social-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 1.5em;
+}
+
+.social-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #4a3b9b;
+  transform: translateY(-2px);
+}
+
+.social-option i {
+  font-size: 24px;
+  color: #d1cfe2;
+  flex-shrink: 0;
+}
+
+.option-info h3 {
+  color: #ffffff;
+  font-size: 1em;
+  margin-bottom: 5px;
+  font-family: 'Merriweather', serif;
+}
+
+.option-info p {
+  color: #d1cfe2;
+  font-size: 0.85em;
+  font-family: 'Merriweather', serif;
+}
+
+/* ===== FORMULÁRIO DE EMAIL ===== */
+.social-email-form {
+  width: 100%;
+}
+
+.social-submit-btn {
+  width: 100%;
+  height: 50px;
+  background: #4a3b9b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  font-family: 'Merriweather', serif;
+}
+
+.social-submit-btn:hover {
+  background: #2a1a5e;
+  transform: translateY(-2px);
+}
+
+.social-terms {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #d1cfe2;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+}
+
+.social-terms a {
+  color: #d1cfe2;
+  text-decoration: underline;
+  font-family: 'Merriweather', serif;
+}
+
+.social-terms a:hover {
+  color: #ffffff;
+}
+
+/* ===== ANIMAÇÕES ===== */
+@keyframes shake {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(-5px) translateY(-5px) rotate(-5deg); }
+  50% { transform: translateX(5px) translateY(-5px) rotate(5deg); }
+  75% { transform: translateX(-5px) translateY(-5px) rotate(-5deg); }
+}
+
+@keyframes labelFloat {
+  0% {
+    transform: translateY(-50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-25%) scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0) scale(0.95);
+    opacity: 1;
+  }
+}
+
+@keyframes labelPulse {
+  0%, 100% {
+    box-shadow: 
+      0 3px 8px rgba(74, 59, 155, 0.4),
+      0 0 0 2px #d1cfe2;
+  }
+  50% {
+    box-shadow: 
+      0 3px 12px rgba(74, 59, 155, 0.6),
+      0 0 0 2px #ffffff,
+      0 0 10px rgba(209, 207, 226, 0.8);
+  }
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.input-field:focus ~ .label {
+  animation: 
+    labelFloat 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+    labelPulse 2s infinite;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  
+  .login_box {
+    padding: 5.5em 1.5em 2.5em;
+  }
+
+  .login-header {
+    width: 140px;
+    height: 50px;
+  }
+
+  .login-header h1 {
+    font-size: 24px;
+  }
+
+  .input-field,
+  .input-submit {
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .social-button {
+    width: 45px;
+    height: 45px;
+  }
+
+  .google-icon,
+  .microsoft-icon {
+    font-size: 20px;
+  }
+
+  .remember-forgot {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .register {
+    font-size: 12px;
+  }
+
+  .social-login-title {
+    font-size: 14px;
+  }
+  
+  .social-login-title::before,
+  .social-login-title::after {
+    width: 25%;
+  }
+
+  .input-field:focus ~ .label,
+  .input-field:not(:placeholder-shown) ~ .label {
+    top: -10px;
+    font-size: 12px;
+    padding: 3px 10px;
+  }
+
+  .social-modal-content {
+    padding: 1.5em;
+    margin: 20px;
+  }
+
+  .social-options {
+    gap: 10px;
+  }
+
+  .social-option {
+    padding: 12px;
+  }
+
+  .social-option i {
+    font-size: 20px;
+  }
+
+  .option-info h3 {
+    font-size: 0.9em;
+  }
+
+  .option-info p {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 360px) {
+  .login_box {
+    padding: 5em 1em 2em;
+  }
+
+  .login-header {
+    width: 120px;
+    height: 45px;
+  }
+
+  .login-header h1 {
+    font-size: 20px;
+  }
+
+  .input-field {
+    padding: 0 50px 0 12px;
+    font-size: 13px;
+  }
+
+  .social-login {
+    gap: 10px;
+  }
+
+  .social-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ===== ACESSIBILIDADE - ALTO CONTRASTE ===== */
+@media (prefers-contrast: high) {
+  .login_box {
+    border-color: #ffffff;
+  }
+  
+  .input-field {
+    border-color: #ffffff;
+  }
+  
+  .input-field:focus {
+    border-color: #ffff00;
+  }
+
+  .input-field.submitted.error {
+    border-color: #ff0000;
+  }
+
+  .input-field:focus ~ .label,
+  .input-field:not(:placeholder-shown) ~ .label {
+    background: #000000;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+  }
+
+  .social-modal-content {
+    border-color: #ffffff;
+  }
+
+  .social-option:hover {
+    border-color: #ffff00;
+  }
+}
+
+/* ===== ACESSIBILIDADE - REDUÇÃO DE MOVIMENTO ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .login_box:hover {
+    transform: none;
+  }
+  
+  .input_box:hover {
+    transform: none;
+  }
+  
+  .input_box:hover .input-field {
+    box-shadow: 8px 8px 0 #1a0e3f;
+  }
+  
+  .input-submit:hover,
+  .social-button:hover,
+  .social-option:hover {
+    transform: none;
+  }
+
+  .input-field:focus ~ .label,
+  .input-field:not(:placeholder-shown) ~ .label {
+    animation: none;
+  }
+
+  .social-modal.active {
+    animation: none;
+  }
+
+  .social-modal-content {
+    animation: none;
+    transform: scale(1);
+  }
+}
+
+/* ===== ESTADOS DE FOCO PARA ACESSIBILIDADE ===== */
+.input-field:focus-visible {
+  outline: 3px solid #4a3b9b;
+  outline-offset: 2px;
+}
+
+.social-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.social-option:focus-visible {
+  outline: 3px solid #4a3b9b;
+  outline-offset: 2px;
+}
+
+/* ===== ESTILOS PARA DISPOSITIVOS TÁTEIS ===== */
+@media (hover: none) and (pointer: coarse) {
+  .input_box:hover {
+    transform: none;
+  }
+  
+  .input_box:hover .input-field {
+    box-shadow: 8px 8px 0 #1a0e3f;
+  }
+  
+  .input-submit:active,
+  .social-button:active,
+  .social-option:active {
+    transform: scale(0.95);
+  }
+}

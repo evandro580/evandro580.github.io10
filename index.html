@@ -1,1217 +1,604 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Publicação Web - Projeto Master</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* 🌟 VARIÁVEIS E RESET */
-        :root {
-            --vermelho: #ff3b30;
-            --vermelho-escuro: #cc0000;
-            --vermelho-claro: #ff6b6b;
-            --azul: #007bff;
-            --azul-escuro: #0056b3;
-            --preto: #1a1a1a;
-            --cinza-escuro: #2d2d2d;
-            --cinza: #6c757d;
-            --branco: #ffffff;
-            --gradiente: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradiente-vermelho: linear-gradient(135deg, var(--vermelho) 0%, #ff6b6b 100%);
-            --gradiente-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            --sombra: 0 10px 30px rgba(0,0,0,0.1);
-            --sombra-vermelha: 0 10px 30px rgba(255,59,48,0.3);
-            --sombra-pesada: 0 20px 50px rgba(0,0,0,0.15);
-            --borda-radius: 16px;
-            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.7;
-            color: var(--cinza);
-            background: var(--branco);
-            overflow-x: hidden;
-        }
-
-        /* 🌟 TIPOGRAFIA */
-        h1, h2, h3, h4, h5, h6 {
-            color: var(--preto);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: clamp(2.8rem, 5vw, 4.5rem);
-            background: linear-gradient(135deg, var(--preto) 0%, var(--vermelho) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        h2 {
-            font-size: clamp(2.2rem, 4vw, 3.2rem);
-            text-align: center;
-            position: relative;
-            margin-bottom: 3rem;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--vermelho);
-            border-radius: 2px;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* 🌟 LAYOUT */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .section {
-            padding: 8rem 0;
-        }
-
-        .section:nth-child(even) {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-
-        /* 🌟 HEADER E NAVEGAÇÃO */
-        .header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            transition: var(--transicao);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .header.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            box-shadow: var(--sombra);
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--vermelho);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logo i {
-            font-size: 2rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--preto);
-            font-weight: 600;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            transition: var(--transicao);
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--vermelho);
-            transform: translateY(-2px);
-        }
-
-        .nav-link.active {
-            background: var(--vermelho);
-            color: var(--branco);
-            box-shadow: var(--sombra-vermelha);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            background: none;
-            border: none;
-            color: var(--preto);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: var(--transicao);
-        }
-
-        .mobile-menu:hover {
-            background: var(--vermelho);
-            color: var(--branco);
-        }
-
-        /* 🌟 HERO SECTION */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: var(--gradiente-hero);
-            position: relative;
-            overflow: hidden;
-            color: var(--branco);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
-            opacity: 0.1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            color: var(--branco);
-            -webkit-text-fill-color: var(--branco);
-            background: none;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.5s forwards;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.8s forwards;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 1s ease 1.1s forwards;
-        }
-
-        /* 🌟 BOTÕES */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 1.2rem 2.5rem;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transicao);
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: var(--vermelho);
-            color: var(--branco);
-            box-shadow: var(--sombra-vermelha);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(255,59,48,0.4);
-            background: var(--vermelho-escuro);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--branco);
-            border: 2px solid var(--branco);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary:hover {
-            background: var(--branco);
-            color: var(--vermelho);
-            transform: translateY(-5px);
-        }
-
-        /* 🌟 CARDS */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-            margin-top: 3rem;
-        }
-
-        .card {
-            background: var(--branco);
-            padding: 3rem 2.5rem;
-            border-radius: var(--borda-radius);
-            box-shadow: var(--sombra);
-            transition: var(--transicao);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--vermelho);
-        }
-
-        .card:hover {
-            transform: translateY(-15px);
-            box-shadow: var(--sombra-pesada);
-        }
-
-        .card-icon {
-            width: 90px;
-            height: 90px;
-            background: var(--gradiente-vermelho);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-            font-size: 2.5rem;
-            color: var(--branco);
-            box-shadow: var(--sombra-vermelha);
-        }
-
-        .card h3 {
-            color: var(--preto);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-        }
-
-        .card ul {
-            list-style: none;
-            text-align: left;
-        }
-
-        .card li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid #f0f0f0;
-            position: relative;
-            padding-left: 2rem;
-            transition: var(--transicao);
-        }
-
-        .card li:hover {
-            background: #f8f9fa;
-            padding-left: 2.5rem;
-        }
-
-        .card li:before {
-            content: '✓';
-            color: var(--vermelho);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-            font-size: 1.2rem;
-        }
-
-        /* 🌟 TECNOLOGIAS */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .tech-item {
-            text-align: center;
-            padding: 2.5rem 2rem;
-            background: var(--branco);
-            border-radius: var(--borda-radius);
-            box-shadow: var(--sombra);
-            transition: var(--transicao);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .tech-item:hover {
-            transform: scale(1.08) rotate(2deg);
-            box-shadow: var(--sombra-vermelha);
-        }
-
-        .tech-icon {
-            font-size: 3.5rem;
-            color: var(--vermelho);
-            margin-bottom: 1.5rem;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tech-item h4 {
-            color: var(--preto);
-            margin-bottom: 0.5rem;
-        }
-
-        /* 🌟 GALERIA DE IMAGENS */
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: var(--borda-radius);
-            overflow: hidden;
-            box-shadow: var(--sombra);
-            transition: var(--transicao);
-            height: 250px;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--sombra-pesada);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transicao);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            color: var(--branco);
-            padding: 2rem 1.5rem 1.5rem;
-            transform: translateY(100%);
-            transition: var(--transicao);
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
-        }
-
-        /* 🌟 CONTADORES */
-        .stats {
-            background: var(--gradiente-vermelho);
-            color: var(--branco);
-            padding: 6rem 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stats::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80') center/cover;
-            opacity: 0.1;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .stat-item h3 {
-            font-size: 3.5rem;
-            color: var(--branco);
-            margin-bottom: 0.5rem;
-            font-weight: 800;
-        }
-
-        .stat-item p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* 🌟 FORMULÁRIO */
-        .contact-form {
-            max-width: 700px;
-            margin: 3rem auto 0;
-            background: var(--branco);
-            padding: 4rem;
-            border-radius: var(--borda-radius);
-            box-shadow: var(--sombra-pesada);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            color: var(--preto);
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1.2rem 1.5rem;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: var(--transicao);
-            font-family: 'Inter', sans-serif;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--vermelho);
-            box-shadow: 0 0 0 3px rgba(255,59,48,0.1);
-            transform: translateY(-2px);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* 🌟 FOOTER */
-        .footer {
-            background: var(--preto);
-            color: var(--branco);
-            padding: 6rem 0 3rem;
-            position: relative;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1550684376-efcbd6e3f031?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
-            opacity: 0.05;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 4rem;
-            margin-bottom: 4rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .footer-col h4 {
-            color: var(--branco);
-            margin-bottom: 2rem;
-            position: relative;
-            font-size: 1.3rem;
-        }
-
-        .footer-col h4::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--vermelho);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links a {
-            color: var(--cinza);
-            text-decoration: none;
-            transition: var(--transicao);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer-links a:hover {
-            color: var(--vermelho);
-            padding-left: 8px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-links a {
-            width: 50px;
-            height: 50px;
-            background: var(--cinza-escuro);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--branco);
-            text-decoration: none;
-            transition: var(--transicao);
-            font-size: 1.2rem;
-        }
-
-        .social-links a:hover {
-            background: var(--vermelho);
-            transform: translateY(-5px) scale(1.1);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 3rem;
-            border-top: 1px solid var(--cinza-escuro);
-            color: var(--cinza);
-            position: relative;
-            z-index: 2;
-        }
-
-        /* 🌟 ANIMAÇÕES */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* 🌟 ELEMENTOS VERMELHOS ESPECIAIS */
-        .vermelho-destaque {
-            color: var(--vermelho);
-            font-weight: 700;
-        }
-
-        .badge-vermelho {
-            background: var(--vermelho);
-            color: var(--branco);
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-left: 0.5rem;
-            box-shadow: var(--sombra-vermelha);
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1.5rem 0;
-        }
-
-        .progress {
-            height: 100%;
-            background: var(--vermelho);
-            border-radius: 4px;
-            transition: width 1.5s ease;
-            position: relative;
-        }
-
-        .progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* 🌟 RESPONSIVIDADE */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: var(--branco);
-                flex-direction: column;
-                padding: 2rem;
-                box-shadow: var(--sombra-pesada);
-                border-radius: 0 0 var(--borda-radius) var(--borda-radius);
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
-            .mobile-menu {
-                display: block;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-
-            .section {
-                padding: 5rem 0;
-            }
-
-            .contact-form {
-                padding: 2.5rem 2rem;
-                margin: 2rem 1rem 0;
-            }
-
-            .card {
-                padding: 2.5rem 2rem;
-            }
-        }
-
-        /* 🌟 UTILITÁRIOS */
-        .mt-2 { margin-top: 2rem; }
-        .mb-2 { margin-bottom: 2rem; }
-        .text-large { font-size: 1.2rem; }
-        .opacity-90 { opacity: 0.9; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Encantu's - Sua livraria virtual de indicações literárias" />
+  <title>Encantu's - Indicações Literárias</title>
+  <link rel="stylesheet" href="cs/style.css">
 </head>
 <body>
-    <!-- 🎯 HEADER -->
-    <header class="header" id="header">
-        <div class="container">
-            <nav class="nav">
-                <a href="#" class="logo">
-                    <i class="fas fa-rocket"></i>
-                    WebMaster
-                </a>
-                
-                <ul class="nav-menu">
-                    <li><a href="#home" class="nav-link active">Home</a></li>
-                    <li><a href="#conceitos" class="nav-link">Conceitos</a></li>
-                    <li><a href="#tecnologias" class="nav-link">Tecnologias</a></li>
-                    <li><a href="#galeria" class="nav-link">Galeria</a></li>
-                    <li><a href="#contato" class="nav-link">Contato</a></li>
-                </ul>
-
-                <button class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
+  <header class="topo">
+    <div class="topo-content">
+      <!-- LADO ESQUERDO: Logo/Mago e Menu -->
+      <div class="topo-esquerdo">
+          <div class="topo-logo">
+          <a href="index.html">
+            <img class="topo-imagem" src="imagem/mago.png" alt="Logo Encantu's" />
+          </a>
         </div>
-    </header>
+        <nav class="topo-menu">
+          <a href="cadastro.html">CADASTRO</a>
+          <a href="login.html">LOGIN</a>
+          <a href="Sobre.html">SOBRE</a>
+          
+        </nav>
+      </div>
 
-    <!-- 🌟 HERO SECTION -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Publicação de Aplicações Web</h1>
-                <p class="text-large opacity-90">Domine as tecnologias modernas de desenvolvimento e deploy com este projeto completo e profissional</p>
-                <div class="hero-buttons">
-                    <a href="#conceitos" class="btn btn-primary">
-                        <i class="fas fa-play-circle"></i>
-                        Explorar Conceitos
-                    </a>
-                    <a href="#galeria" class="btn btn-secondary">
-                        <i class="fas fa-images"></i>
-                        Ver Galeria
-                    </a>
-                </div>
+      <!-- LADO DIREITO: Busca -->
+      <div class="topo-direito">
+        <div class="input-container">
+          <input
+            class="input"
+            name="text"
+            type="text"
+            placeholder="Procure por um livro..."
+            id="searchText"
+          />
+          <div id="suggestions" class="suggestions"></div>
+        </div>
+      </div>
+      <div>     
+         <a href="Sobre.html">CATEGORIA</a>
+          </div>
+    </div>
+
+  </header>
+
+  <!-- CARROSSEL PROMOCIONAL - COM INDICAÇÃO DE ARRASTE -->
+  <section class="carrossel-promocional-section">
+    <div class="carrossel-promocional">
+      <ul class="slides">
+        <li class="slide ativo">
+          <div class="slide-img" style="background-image: url('imagem/u.png')">
+            <!-- Sem conteúdo de texto -->
+          </div>
+        </li>
+        
+        <li class="slide">
+          <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&h=600&q=80')">
+            <!-- Sem conteúdo de texto -->
+          </div>
+        </li>
+        
+        <li class="slide">
+          <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&h=600&q=80')">
+            <!-- Sem conteúdo de texto -->
+          </div>
+        </li>
+      </ul>
+      
+      <!-- INDICAÇÃO DE ARRASTE -->
+      <div class="indicacao-arraste">
+        Arraste para os lados para navegar
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE INDICAÇÕES EM DESTAQUE -->
+  <section class="secao-novidades">
+    <h2 class="titulo-novidades">Indicações em Destaque</h2>
+    
+    <div class="grid-livros" id="gridLivros">
+      <!-- Os cards de livros serão gerados pelo JavaScript -->
+    </div>
+  </section>
+
+  <!-- CATEGORIAS DE INDICAÇÕES -->
+  <section class="catalogo-categorias">
+    <h2 class="catalogo-titulo">CATEGORIAS DE INDICAÇÕES</h2>
+    <p class="catalogo-subtitulo">Explore nossas recomendações por gênero literário</p>
+
+    <div class="categoria-container" id="categoriaContainer">
+      <!-- As categorias serão geradas pelo JavaScript -->
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="rodape">
+    <div class="rodape-content">
+      <div class="rodape-contato">
+        <p> Quer sugerir uma indicação?</p>
+        <p>Email: <a href="mailto:encantus1livraria@gmail.com">encantus1livraria@gmail.com</a></p>
+        <p> Sua livraria virtual de indicações</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // DADOS DOS LIVROS
+    const livros = [
+      {
+        id: 1,
+        titulo: "Um de nós é o próximo (Vol. 2 Um de nós)",
+        autor: "Karen M. McManus",
+        imagem: "https://m.media-amazon.com/images/I/81WYMklv2pL._SY466_.jpg",
+        link: "UM_DE_NOS.HTML"
+      },
+      {
+        id: 2,
+        titulo: "The Art of Horizon Zero Dawn",
+        autor: " Paul Davies",
+        imagem: "https://m.media-amazon.com/images/I/810HInpTcJL._SY425_.jpg",
+        link: "Horizon.html"
+      },
+      {
+        id: 3,
+        titulo: "HARRY POTTER E O PRISIONEIRO DE AZKABAN",
+        autor: "J.K. ROWLING",
+        imagem: "imagem/Prisioneiro_de_Azkaban.png",
+        link: "PRISIONEIRO_DE_AZKABAN.html"
+      },
+      {
+        id: 4,
+        titulo: "HARRY POTTER E O CÁLICE DE FOGO",
+        autor: "J.K. ROWLING",
+        imagem: "imagem/Cálice_de_Fogo.png",
+        link: "CALICE_DE_FOGO.html"
+      },
+      {
+        id: 5,
+        titulo: "Declínio de um homem",
+        autor: "Osamu Dazai",
+        imagem: "https://m.media-amazon.com/images/I/81ZWDEnkQ8L._SY466_.jpg",
+        link: "Declinio.html"
+      },
+      {
+        id: 6,
+        titulo: "One Piece, Vol. 106",
+        autor: "Eiichiro Oda",
+        imagem: "https://m.media-amazon.com/images/I/81KuBRfJwxL._SY466_.jpg",
+        link: "One_Piece.html"
+      },
+      {
+        id: 7,
+        titulo: "O príncipe cruel (Vol. 1 O Povo do Ar",
+        autor: "Holly Black",
+        imagem: "https://m.media-amazon.com/images/I/81FH6q0EqYS._SY466_.jpg",
+        link: "O_príncipe_cruel.html"
+      },
+      {
+        id: 8,
+        titulo: "Weak Hero Vol. 1",
+        autor: "Kim JS.Seopass",
+        imagem: "https://m.media-amazon.com/images/I/81PWk6DUQuL._SY466_.jpg",
+        link: "Weak_Hero.html"
+      },
+      {
+        id: 9,
+        titulo: "Casas estranhas: Casas estranhas Vol. 1",
+        autor: "Uketsu ",
+        imagem: "https://m.media-amazon.com/images/I/81-m2B4F9hL._SY466_.jpg",
+        link: "Casas_estranhas.html"
+      },
+      {
+        id: 10,
+        titulo: "Bungo Stray Dogs Vol. 25",
+        autor: "Kafka Asagiri",
+        imagem: "https://m.media-amazon.com/images/I/612ECD2GQEL._SY425_.jpg",
+        link: "Bungo_Stray_Dogs.html"
+      }
+    ];
+
+    // CATEGORIAS
+    const categorias = [
+      {
+        nome: "FANTASIA",
+        submenu: [
+          { texto: "Senhor dos Anéis", link: "aneis.html" },
+          { texto: "Crônicas de Nárnia", link: "informacoes/cronicas.html" },
+          { texto: "Harry Potter", link: "informacoes/harrypotter.html" }
+        ]
+      },
+      {
+        nome: "AVENTURA",
+        submenu: [
+          { texto: "God of War", link: "god.html" },
+          { texto: "Mortal Kombat", link: "kombat.html" },
+          { texto: "The Last of Us", link: "Zombi.html" }
+        ]
+      },
+      {
+        nome: "ROMANCE",
+        submenu: [
+          { texto: "Orgulho e Preconceito", link: "informacoes/orgulhopreconceito.html" },
+          { texto: "Como Eu Era Antes de Você", link: "informacoes/comoeuera.html" },
+          { texto: "A Culpa é das Estrelas", link: "informacoes/culpaestrelas.html" }
+        ]
+      },
+      {
+        nome: "SUSPENSE",
+        submenu: [
+          { texto: "Ilha do Medo", link: "informacoes/ilhadomedo.html" },
+          { texto: "A Vila dos Pecados", link: "informacoes/vilapecados.html" },
+          { texto: "Garota Exemplar", link: "informacoes/garotaexemplar.html" }
+        ]
+      },
+      {
+        nome: "FICÇÃO",
+        submenu: [
+          { texto: "Interestelar", link: "informacoes/interestelar.html" },
+          { texto: "Duna", link: "informacoes/duna.html" },
+          { texto: "Matrix", link: "informacoes/matrix.html" }
+        ]
+      },
+      {
+        nome: "TERROR",
+        submenu: [
+          { texto: "Invocação do Mal", link: "informacoes/invocacaomal.html" },
+          { texto: "IT - A Coisa", link: "informacoes/it.html" },
+          { texto: "Hereditário", link: "informacoes/hereditario.html" }
+        ]
+      },
+      {
+        nome: "DRAMA",
+        submenu: [
+          { texto: "Clube da Luta", link: "informacoes/clubedaluta.html" },
+          { texto: "O Curioso Caso de Benjamin Button", link: "informacoes/benjaminbutton.html" },
+          { texto: "12 Anos de Escravidão", link: "informacoes/12anos.html" }
+        ]
+      }
+    ];
+
+    // FUNÇÃO PARA GERAR OS CARDS DE LIVROS
+    function gerarCardsLivros() {
+      const gridLivros = document.getElementById('gridLivros');
+      
+      livros.forEach(livro => {
+        const card = document.createElement('div');
+        card.className = 'card-livro';
+        card.innerHTML = `
+          <div class="livro-imagem-container">
+            <img src="${livro.imagem}" alt="${livro.titulo}" class="livro-imagem">
+          </div>
+          <div class="livro-info">
+            <div class="autor-livro">${livro.autor}</div>
+            <div class="titulo-livro">${livro.titulo}</div>
+            <div class="livro-botoes">
+              <a href="${livro.link}" class="btn-informacoes">Ver Informações</a>
             </div>
-        </div>
-    </section>
+          </div>
+        `;
+        gridLivros.appendChild(card);
+      });
+    }
 
-    <!-- 📚 SEÇÃO CONCEITOS -->
-    <section class="section" id="conceitos">
-        <div class="container">
-            <h2>Conceitos Fundamentais</h2>
-            <p class="text-center text-large" style="max-width: 700px; margin: 0 auto 3rem;">Revisão completa dos principais tópicos de publicação web moderna</p>
-            
-            <div class="cards-grid">
-                <div class="card animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fab fa-git-alt"></i>
-                    </div>
-                    <h3>Git & GitHub</h3>
-                    <ul>
-                        <li>Controle de versão distribuído</li>
-                        <li>Commits semânticos e organização</li>
-                        <li>Branches e estratégias de merge</li>
-                        <li>GitHub Pages e Actions</li>
-                        <li>Pull Requests e code review</li>
-                    </ul>
-                </div>
-
-                <div class="card animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fab fa-linux"></i>
-                    </div>
-                    <h3>Comandos Linux</h3>
-                    <ul>
-                        <li>Navegação avançada no terminal</li>
-                        <li>Gerenciamento de arquivos e permissões</li>
-                        <li>Processos, serviços e systemd</li>
-                        <li>Scripting e automação</li>
-                        <li>SSH e administração remota</li>
-                    </ul>
-                </div>
-
-                <div class="card animate-on-scroll">
-                    <div class="card-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
-                    <h3>Publicação Estática</h3>
-                    <ul>
-                        <li>GitHub Pages - Hospedagem gratuita</li>
-                        <li>Vercel - Deploy contínuo</li>
-                        <li>Netlify - Alternativa robusta</li>
-                        <li>Domínios customizados e SSL</li>
-                        <li>Performance e otimização</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 💻 SEÇÃO TECNOLOGIAS -->
-    <section class="section" id="tecnologias">
-        <div class="container">
-            <h2>Tecnologias Utilizadas</h2>
-            <p class="text-center text-large" style="max-width: 600px; margin: 0 auto 3rem;">Stack tecnológico completo para desenvolvimento web moderno</p>
-            
-            <div class="tech-grid">
-                <div class="tech-item animate-on-scroll">
-                    <div class="tech-icon">
-                        <i class="fab fa-git"></i>
-                    </div>
-                    <h4>Git</h4>
-                    <p>Controle de versão distribuído</p>
-                </div>
-
-                <div class="tech-item animate-on-scroll">
-                    <div class="tech-icon">
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <h4>GitHub</h4>
-                    <p>Plataforma de colaboração</p>
-                </div>
-
-                <div class="tech-item animate-on-scroll">
-                    <div class="tech-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h4>Vercel</h4>
-                    <p>Deploy e hosting moderno</p>
-                </div>
-
-                <div class="tech-item animate-on-scroll">
-                    <div class="tech-icon">
-                        <i class="fab fa-linux"></i>
-                    </div>
-                    <h4>Linux</h4>
-                    <p>Sistema operacional</p>
-                </div>
-
-                <div class="tech-item animate-on-scroll">
-                    <div class="tech-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h4>HTTPS</h4>
-                    <p>Segurança e certificados</p>
-                </div>
-
-                <div class="tech-item animate-on-scroll">
-                    <div class="tech-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h4>DNS</h4>
-                    <p>Configuração de domínios</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 🖼️ SEÇÃO GALERIA -->
-    <section class="section" id="galeria">
-        <div class="container">
-            <h2>Galeria do Projeto</h2>
-            <p class="text-center text-large" style="max-width: 600px; margin: 0 auto 3rem;">Visualize as tecnologias e conceitos em ação</p>
-            
-            <div class="image-gallery">
-                <div class="gallery-item animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Desenvolvimento Web">
-                    <div class="gallery-overlay">
-                        <h4>Desenvolvimento</h4>
-                        <p>Código limpo e organizado</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Git e Versionamento">
-                    <div class="gallery-overlay">
-                        <h4>Git</h4>
-                        <p>Controle de versão profissional</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tecnologia">
-                    <div class="gallery-overlay">
-                        <h4>Tecnologia</h4>
-                        <p>Stack moderno e eficiente</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1526379879527-8559ecfcaec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Deploy">
-                    <div class="gallery-overlay">
-                        <h4>Deploy</h4>
-                        <p>Publicação automatizada</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 📊 SEÇÃO ESTATÍSTICAS -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item animate-on-scroll">
-                    <h3 data-count="6">0</h3>
-                    <p>Conceitos Dominados</p>
-                </div>
-                <div class="stat-item animate-on-scroll">
-                    <h3 data-count="500">0</h3>
-                    <p>Linhas de Código</p>
-                </div>
-                <div class="stat-item animate-on-scroll">
-                    <h3 data-count="3">0</h3>
-                    <p>Plataformas de Deploy</p>
-                </div>
-                <div class="stat-item animate-on-scroll">
-                    <h3 data-count="100">0</h3>
-                    <p>Performance Score</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 📞 SEÇÃO CONTATO -->
-    <section class="section" id="contato">
-        <div class="container">
-            <h2>Entre em Contato</h2>
-            <p class="text-center text-large" style="max-width: 600px; margin: 0 auto 3rem;">Tem dúvidas ou quer saber mais sobre o projeto?</p>
-            
-            <form class="contact-form animate-on-scroll">
-                <div class="form-group">
-                    <label for="nome">Nome Completo</label>
-                    <input type="text" id="nome" class="form-control" placeholder="Seu nome completo" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="assunto">Assunto</label>
-                    <input type="text" id="assunto" class="form-control" placeholder="Assunto da mensagem" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="mensagem">Mensagem</label>
-                    <textarea id="mensagem" class="form-control" rows="6" placeholder="Sua mensagem..." required></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    <i class="fas fa-paper-plane"></i>
-                    Enviar Mensagem
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- 🦶 FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>WebMaster Pro</h4>
-                    <p style="margin-bottom: 2rem;">Projeto desenvolvido para demonstrar domínio completo dos conceitos de publicação web moderna com design profissional e código limpo.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Links Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#conceitos"><i class="fas fa-book"></i> Conceitos</a></li>
-                        <li><a href="#tecnologias"><i class="fas fa-code"></i> Tecnologias</a></li>
-                        <li><a href="#galeria"><i class="fas fa-images"></i> Galeria</a></li>
-                        <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Conceitos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fab fa-git-alt"></i> Git & GitHub</a></li>
-                        <li><a href="#"><i class="fab fa-linux"></i> Comandos Linux</a></li>
-                        <li><a href="#"><i class="fas fa-cloud"></i> Vercel</a></li>
-                        <li><a href="#"><i class="fas fa-shield-alt"></i> HTTPS</a></li>
-                        <li><a href="#"><i class="fas fa-globe"></i> DNS</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Contato</h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-envelope"></i> email@exemplo.com</a></li>
-                        <li><a href="#"><i class="fas fa-phone"></i> (11) 99999-9999</a></li>
-                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> São Paulo, SP</a></li>
-                        <li><a href="#"><i class="fas fa-globe"></i> www.seusite.com</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2024 Publicação de Aplicações Web - Projeto Master. Todos os direitos reservados.</p>
-                <p class="mt-2">Desenvolvido com ❤️ e muito ☕</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 🚀 SCRIPTS -->
-    <script>
-        // 🌟 NAVEGAÇÃO FIXA
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+    // FUNÇÃO PARA GERAR CATEGORIAS
+    function gerarCategorias() {
+      const categoriaContainer = document.getElementById('categoriaContainer');
+      
+      categorias.forEach(categoria => {
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dropdown';
+        
+        const categoriaItem = document.createElement('div');
+        categoriaItem.className = 'categoria-item';
+        categoriaItem.textContent = categoria.nome;
+        
+        const submenu = document.createElement('div');
+        submenu.className = 'submenu';
+        
+        categoria.submenu.forEach(item => {
+          const link = document.createElement('a');
+          link.href = item.link;
+          link.textContent = item.texto;
+          submenu.appendChild(link);
         });
+        
+        dropdown.appendChild(categoriaItem);
+        dropdown.appendChild(submenu);
+        categoriaContainer.appendChild(dropdown);
+      });
+    }
 
-        // 🌟 MENU MOBILE
-        const mobileMenu = document.querySelector('.mobile-menu');
-        const navMenu = document.querySelector('.nav-menu');
-
-        mobileMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            mobileMenu.innerHTML = navMenu.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+    // CARROSSEL PROMOCIONAL - CORRIGIDO
+    class Carrossel {
+      constructor(container) {
+        this.container = container;
+        this.slides = container.querySelectorAll('.slide');
+        this.indicacaoArraste = container.querySelector('.indicacao-arraste');
+        this.indexAtual = 0;
+        this.totalSlides = this.slides.length;
+        this.intervalo = null;
+        this.velocidade = 7000; // 7 SEGUNDOS
+        
+        // Variáveis para controle de arrasto
+        this.arrastando = false;
+        this.startX = 0;
+        this.currentX = 0;
+        this.threshold = 50; // Distância mínima para considerar um arrasto
+        
+        this.iniciar();
+        this.adicionarEventosArrasto();
+        this.configurarIndicacao();
+      }
+      
+      iniciar() {
+        this.mostrarSlide(this.indexAtual);
+        this.iniciarAutoPlay();
+      }
+      
+      mostrarSlide(index) {
+        // Remove a classe ativo de todos os slides
+        this.slides.forEach(slide => slide.classList.remove('ativo'));
+        
+        // Adiciona a classe ativo ao slide atual
+        this.slides[index].classList.add('ativo');
+        this.indexAtual = index;
+      }
+      
+      slideAnterior() {
+        let novoIndex = this.indexAtual - 1;
+        if (novoIndex < 0) {
+          novoIndex = this.totalSlides - 1;
+        }
+        this.mostrarSlide(novoIndex);
+        this.reiniciarAutoPlay();
+      }
+      
+      proximoSlide() {
+        let novoIndex = this.indexAtual + 1;
+        if (novoIndex >= this.totalSlides) {
+          novoIndex = 0;
+        }
+        this.mostrarSlide(novoIndex);
+        this.reiniciarAutoPlay();
+      }
+      
+      iniciarAutoPlay() {
+        this.intervalo = setInterval(() => {
+          this.proximoSlide();
+        }, this.velocidade);
+      }
+      
+      pararAutoPlay() {
+        if (this.intervalo) {
+          clearInterval(this.intervalo);
+          this.intervalo = null;
+        }
+      }
+      
+      reiniciarAutoPlay() {
+        this.pararAutoPlay();
+        this.iniciarAutoPlay();
+      }
+      
+      adicionarEventosArrasto() {
+        const container = this.container;
+        
+        // Eventos de mouse
+        container.addEventListener('mousedown', this.iniciarArrasto.bind(this));
+        document.addEventListener('mousemove', this.arrastar.bind(this));
+        document.addEventListener('mouseup', this.terminarArrasto.bind(this));
+        
+        // Eventos de touch
+        container.addEventListener('touchstart', this.iniciarArrasto.bind(this));
+        document.addEventListener('touchmove', this.arrastar.bind(this));
+        document.addEventListener('touchend', this.terminarArrasto.bind(this));
+        
+        // Prevenir comportamento padrão de arrasto
+        container.addEventListener('dragstart', (e) => e.preventDefault());
+      }
+      
+      iniciarArrasto(e) {
+        this.arrastando = true;
+        this.pararAutoPlay();
+        
+        // Obter a posição inicial do toque/clique
+        if (e.type === 'touchstart') {
+          this.startX = e.touches[0].clientX;
+        } else {
+          this.startX = e.clientX;
+        }
+        
+        this.currentX = this.startX;
+        this.container.style.cursor = 'grabbing';
+        
+        // Esconder indicação durante o arrasto
+        if (this.indicacaoArraste) {
+          this.indicacaoArraste.style.opacity = '0';
+        }
+      }
+      
+      arrastar(e) {
+        if (!this.arrastando) return;
+        
+        e.preventDefault();
+        
+        // Obter a posição atual
+        if (e.type === 'touchmove') {
+          this.currentX = e.touches[0].clientX;
+        } else {
+          this.currentX = e.clientX;
+        }
+      }
+      
+      terminarArrasto(e) {
+        if (!this.arrastando) return;
+        
+        this.arrastando = false;
+        this.container.style.cursor = 'grab';
+        
+        // Calcular a distância do arrasto
+        const diffX = this.startX - this.currentX;
+        
+        // Verificar se o arrasto foi significativo o suficiente
+        if (Math.abs(diffX) > this.threshold) {
+          if (diffX > 0) {
+            // Arrastou para a esquerda - próximo slide
+            this.proximoSlide();
+          } else {
+            // Arrastou para a direita - slide anterior
+            this.slideAnterior();
+          }
+        }
+        
+        // Mostrar indicação novamente após o arrasto
+        if (this.indicacaoArraste) {
+          setTimeout(() => {
+            this.indicacaoArraste.style.opacity = '0.8';
+          }, 1000);
+        }
+        
+        // Reinicia o auto-play após um tempo
+        setTimeout(() => {
+          this.reiniciarAutoPlay();
+        }, 3000);
+      }
+      
+      configurarIndicacao() {
+        // Esconder a indicação após alguns segundos de inatividade
+        setTimeout(() => {
+          if (this.indicacaoArraste && !this.arrastando) {
+            this.indicacaoArraste.style.opacity = '0';
+            this.indicacaoArraste.style.transition = 'opacity 1s ease';
+          }
+        }, 5000);
+        
+        // Mostrar indicação ao passar o mouse
+        this.container.addEventListener('mouseenter', () => {
+          if (this.indicacaoArraste) {
+            this.indicacaoArraste.style.opacity = '0.8';
+          }
         });
-
-        // 🌟 SCROLL SUAVE
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                    navMenu.classList.remove('active');
-                    mobileMenu.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-        });
-
-        // 🌟 ANIMAÇÃO ON SCROLL
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    
-                    // Contadores
-                    if (entry.target.querySelector('h3[data-count]')) {
-                        const countElement = entry.target.querySelector('h3[data-count]');
-                        const target = parseInt(countElement.getAttribute('data-count'));
-                        let current = 0;
-                        const increment = target / 50;
-                        
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                current = target;
-                                clearInterval(timer);
-                            }
-                            countElement.textContent = Math.round(current);
-                        }, 30);
-                    }
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-
-        // 🌟 FORM SUBMISSION
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Animação de sucesso
-            const btn = this.querySelector('button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> Mensagem Enviada!';
-            btn.style.background = '#28a745';
-            
+        
+        this.container.addEventListener('mouseleave', () => {
+          if (this.indicacaoArraste && !this.arrastando) {
             setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-                this.reset();
-            }, 3000);
+              this.indicacaoArraste.style.opacity = '0';
+            }, 1000);
+          }
         });
+      }
+    }
 
-        // 🌟 ACTIVE NAV LINK
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= sectionTop - 200) {
-                    current = section.getAttribute('id');
-                }
-            });
+    // FUNÇÃO DE BUSCA DE LIVROS
+    function searchBook() {
+      const query = document.getElementById("searchText").value.toLowerCase().trim();
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
+      const books = {
+        "senhor dos anéis": "aneis.html",
+        "crônicas de nárnia": "cronicas.html",
+        "mortal kombat": "kombat.html",
+        "the last of us": "Zombi.html",
+        "god of war": "god.html"
+      };
 
-        // 🌟 EFEITOS VISUAIS EXTRAS
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-15px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
+      if (books[query]) {
+        window.location.href = books[query];
+      } else {
+        alert("LIVRO NÃO ENCONTRADO EM NOSSAS INDICAÇÕES!\n\nTente: Senhor dos Anéis,, Crônicas de Nárnia, Mortal Kombat, The Last of Us ou God of War");
+      }
+    }
 
-        console.log('🚀 Site carregado com sucesso!');
-        console.log('🎨 Design profissional com imagens reais');
-        console.log('💻 Stack: HTML5, CSS3, JavaScript ES6+');
-        console.log('📚 Conceitos: Git, Linux, Vercel, HTTPS, DNS');
-    </script>
+    // SUGESTÕES DE BUSCA
+    function configurarBusca() {
+      const searchInput = document.getElementById('searchText');
+      const suggestionsDiv = document.getElementById('suggestions');
+
+      searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        suggestionsDiv.innerHTML = '';
+
+        if (query) {
+          const books = {
+            "senhor dos anéis": "aneis.html",
+            "crônicas de nárnia": "cronicas.html",
+            "mortal kombat": "kombat.html",
+            "the last of us": "Zombi.html",
+            "god of war": "god.html"
+          };
+
+          const matches = Object.keys(books).filter(book => book.includes(query));
+          if (matches.length > 0) {
+            matches.forEach(match => {
+              const suggestion = document.createElement('div');
+              suggestion.className = 'suggestion';
+              suggestion.textContent = match;
+              suggestion.addEventListener('click', () => {
+                searchInput.value = match;
+                window.location.href = books[match];
+              });
+              suggestionsDiv.appendChild(suggestion);
+            });
+            suggestionsDiv.style.display = 'block';
+          } else {
+            suggestionsDiv.style.display = 'none';
+          }
+        } else {
+          suggestionsDiv.style.display = 'none';
+        }
+      });
+
+      searchInput.addEventListener('blur', function() {
+        setTimeout(() => {
+          suggestionsDiv.style.display = 'none';
+        }, 200);
+      });
+
+      searchInput.addEventListener('focus', function() {
+        if (this.value.trim() && suggestionsDiv.children.length > 0) {
+          suggestionsDiv.style.display = 'block';
+        }
+      });
+
+      // Evento de Enter para busca
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          searchBook();
+        }
+      });
+    }
+
+    // SCROLL BEHAVIOR PARA HEADER
+    function configurarScrollHeader() {
+      let lastScroll = 0;
+      const topo = document.querySelector('.topo');
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 100 && currentScroll > lastScroll) {
+          topo.style.transform = 'translateY(-100%)';
+        } else {
+          topo.style.transform = 'translateY(0)';
+        }
+
+        lastScroll = currentScroll;
+      });
+    }
+
+    // INICIALIZAÇÃO
+    document.addEventListener('DOMContentLoaded', function() {
+      // Gerar conteúdo dinâmico
+      gerarCardsLivros();
+      gerarCategorias();
+      
+      // Configurar funcionalidades
+      configurarBusca();
+      configurarScrollHeader();
+
+      // Inicializar carrossel
+      const carrosselPromocional = document.querySelector('.carrossel-promocional');
+      if (carrosselPromocional) {
+        new Carrossel(carrosselPromocional);
+      }
+
+      // Adicionar efeitos de animação dinâmicos nos cards
+      const cards = document.querySelectorAll('.card-livro');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.3}s`;
+      });
+
+      // Efeitos de digitação no input de busca
+      const searchInput = document.getElementById('searchText');
+      searchInput.addEventListener('focus', function() {
+        this.style.animation = 'shake 0.3s ease';
+        setTimeout(() => {
+          this.style.animation = '';
+        }, 300);
+      });
+    });
+  </script>
 </body>
 </html>

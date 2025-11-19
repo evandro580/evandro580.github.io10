@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cadastro na Encantu's - Sua livraria virtual de indicações literárias">
+  <title>Cadastrar - Encantu's</title>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <link rel="stylesheet" href="cs/cadastro.css">
+</head>
+<body>
+  <main class="main-content">
+    <div class="wrapper">
+      <div class="register_box">
+        <header class="register-header">
+          <h1>Cadastrar</h1>
+        </header>
+        <form id="registerForm" class="register-form" novalidate autocomplete="off">
+          <div class="input_box">
+            <input type="text" id="username" class="input-field" placeholder=" " required aria-describedby="username-error" autocomplete="new-username">
+            <label for="username" class="label">Nome de usuário</label>
+            <i class="bx bx-at icon" aria-hidden="true"></i>
+            <span class="error-message" id="username-error"></span>
+            <div class="suggestions-box" id="usernameSuggestions"></div>
+          </div>
+          <div class="input_box">
+            <input type="email" id="email" class="input-field" placeholder=" " required aria-describedby="email-error" autocomplete="new-email">
+            <label for="email" class="label">E-mail</label>
+            <i class="bx bx-envelope icon" aria-hidden="true"></i>
+            <span class="error-message" id="email-error"></span>
+            <div class="suggestions-box" id="emailSuggestions"></div>
+          </div>
+          <div class="input_box">
+            <input type="password" id="password" class="input-field" placeholder=" " required aria-describedby="password-error" autocomplete="new-password">
+            <label for="password" class="label">Senha</label>
+            <i class="bx bx-lock-alt icon" aria-hidden="true"></i>
+            <i class="bx bx-show-alt show-icon" id="togglePassword" role="button" aria-label="Mostrar senha" tabindex="0"></i>
+            <span class="error-message" id="password-error"></span>
+            <div class="password-strength" id="passwordStrength">
+              <span class="strength-bar"></span>
+              <span class="strength-bar"></span>
+              <span class="strength-bar"></span>
+              <span class="strength-text" id="strengthText">Fraca</span>
+            </div>
+            <div class="password-tips" id="passwordTips">
+              <ul>
+                <li id="tip-length"><i class="bx not-met"></i> Pelo menos 6 caracteres</li>
+                <li id="tip-uppercase"><i class="bx not-met"></i> Pelo menos 1 letra maiúscula</li>
+                <li id="tip-number"><i class="bx not-met"></i> Pelo menos 1 número</li>
+                <li id="tip-special"><i class="bx not-met"></i> Pelo menos 1 caractere especial</li>
+              </ul>
+            </div>
+          </div>
+          <div class="terms">
+            <input type="checkbox" id="terms" required autocomplete="off">
+            <label for="terms">Eu concordo com os <a href="termos.html" aria-label="Ler termos de serviço">Termos de Serviço</a> e <a href="privacidade.html" aria-label="Ler política de privacidade">Política de Privacidade</a></label>
+          </div>
+          <div class="input_box">
+            <input type="submit" class="input-submit" value="Criar conta" id="submitButton">
+          </div>
+          <div class="social-register-title">
+            <span>Cadastrar com redes sociais</span>
+          </div>
+          <div class="social-register">
+            <button type="button" class="social-button google-button" id="googleRegister" aria-label="Cadastrar com Google">
+              <i class="bx bxl-google google-icon" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="social-button microsoft-button" id="microsoftRegister" aria-label="Cadastrar com Microsoft">
+              <i class="bx bxl-microsoft microsoft-icon" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="login">
+            <p>Já tem uma conta? <a href="index(login).html" aria-label="Ir para página de login">Entrar</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de confirmação -->
+  <div class="modal" id="successModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🎉 Cadastro realizado!</h3>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Bem-vindo à Encantu's! Sua conta foi criada com sucesso.</p>
+        <div class="user-data" id="userDataDisplay"></div>
+        <div class="modal-actions">
+          <button class="btn-primary" id="newRegisterBtn">Novo Cadastro</button>
+          <a href="index.html" class="btn-secondary">Ir para Início</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sistema de Sugestões Personalizadas
+    class SuggestionsManager {
+      constructor() {
+        this.storageKey = 'encantus_suggestions';
+        this.init();
+      }
+
+      init() {
+        if (!localStorage.getItem(this.storageKey)) {
+          localStorage.setItem(this.storageKey, JSON.stringify({
+            usernames: [],
+            emails: []
+          }));
+        }
+      }
+
+      addSuggestion(type, value) {
+        if (!value.trim()) return;
+        
+        const data = this.getData();
+        const values = data[type];
+        
+        const index = values.indexOf(value);
+        if (index > -1) {
+          values.splice(index, 1);
+        }
+        
+        values.unshift(value);
+        
+        if (values.length > 5) {
+          values.pop();
+        }
+        
+        data[type] = values;
+        this.saveData(data);
+      }
+
+      getSuggestions(type) {
+        const data = this.getData();
+        return data[type] || [];
+      }
+
+      getData() {
+        return JSON.parse(localStorage.getItem(this.storageKey));
+      }
+
+      saveData(data) {
+        localStorage.setItem(this.storageKey, JSON.stringify(data));
+      }
+
+      clearSuggestions(type = null) {
+        if (type) {
+          const data = this.getData();
+          data[type] = [];
+          this.saveData(data);
+        } else {
+          localStorage.removeItem(this.storageKey);
+          this.init();
+        }
+      }
+    }
+
+    // Inicializar gerenciador de sugestões
+    const suggestionsManager = new SuggestionsManager();
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const registerForm = document.getElementById('registerForm');
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordField = document.getElementById('password');
+      const successModal = document.getElementById('successModal');
+      const modalClose = document.getElementById('modalClose');
+      const newRegisterBtn = document.getElementById('newRegisterBtn');
+      const userDataDisplay = document.getElementById('userDataDisplay');
+      const passwordTips = document.getElementById('passwordTips');
+      const inputFields = document.querySelectorAll('.input-field');
+      const usernameInput = document.getElementById('username');
+      const emailInput = document.getElementById('email');
+      const usernameSuggestions = document.getElementById('usernameSuggestions');
+      const emailSuggestions = document.getElementById('emailSuggestions');
+      const googleRegisterBtn = document.getElementById('googleRegister');
+      const microsoftRegisterBtn = document.getElementById('microsoftRegister');
+      
+      let formSubmitted = false;
+
+      // Mostrar sugestões
+      function showSuggestions(input, suggestionsBox, type) {
+        const value = input.value.trim().toLowerCase();
+        const suggestions = suggestionsManager.getSuggestions(type);
+        
+        const filtered = suggestions.filter(item => 
+          item.toLowerCase().includes(value) && item.toLowerCase() !== value
+        );
+
+        if (filtered.length > 0 && value.length > 0) {
+          suggestionsBox.innerHTML = filtered.map(item => `
+            <div class="suggestion-item" data-value="${item}">
+              <i class="bx bx-history"></i>
+              <span>${item}</span>
+            </div>
+          `).join('');
+          suggestionsBox.classList.add('active');
+        } else {
+          suggestionsBox.classList.remove('active');
+        }
+      }
+
+      // Aplicar sugestão selecionada
+      function applySuggestion(input, suggestionsBox, value) {
+        input.value = value;
+        suggestionsBox.classList.remove('active');
+        input.focus();
+      }
+
+      // Eventos para sugestões de username
+      if (usernameInput && usernameSuggestions) {
+        usernameInput.addEventListener('input', function() {
+          showSuggestions(this, usernameSuggestions, 'usernames');
+        });
+
+        usernameInput.addEventListener('focus', function() {
+          showSuggestions(this, usernameSuggestions, 'usernames');
+        });
+
+        usernameSuggestions.addEventListener('click', function(e) {
+          const suggestionItem = e.target.closest('.suggestion-item');
+          if (suggestionItem) {
+            const value = suggestionItem.getAttribute('data-value');
+            applySuggestion(usernameInput, usernameSuggestions, value);
+          }
+        });
+      }
+
+      // Eventos para sugestões de email
+      if (emailInput && emailSuggestions) {
+        emailInput.addEventListener('input', function() {
+          showSuggestions(this, emailSuggestions, 'emails');
+        });
+
+        emailInput.addEventListener('focus', function() {
+          showSuggestions(this, emailSuggestions, 'emails');
+        });
+
+        emailSuggestions.addEventListener('click', function(e) {
+          const suggestionItem = e.target.closest('.suggestion-item');
+          if (suggestionItem) {
+            const value = suggestionItem.getAttribute('data-value');
+            applySuggestion(emailInput, emailSuggestions, value);
+          }
+        });
+      }
+
+      // Fechar sugestões ao clicar fora
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.input_box')) {
+          usernameSuggestions.classList.remove('active');
+          emailSuggestions.classList.remove('active');
+        }
+      });
+
+      // Alternar visibilidade da senha
+      if (togglePassword && passwordField) {
+        togglePassword.addEventListener('click', function () {
+          const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordField.setAttribute('type', type);
+          this.classList.toggle('bx-show-alt');
+          this.classList.toggle('bx-hide');
+          this.setAttribute('aria-label', type === 'password' ? 'Mostrar senha' : 'Esconder senha');
+        });
+
+        togglePassword.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+          }
+        });
+      }
+
+      // Validação do formulário de cadastro
+      if (registerForm) {
+        registerForm.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          
+          formSubmitted = true;
+          
+          inputFields.forEach(field => {
+            field.classList.add('submitted');
+          });
+          
+          const terms = document.getElementById('terms');
+          terms.classList.add('submitted');
+
+          clearErrors();
+          const isValid = validateForm();
+
+          if (isValid) {
+            const submitButton = document.getElementById('submitButton');
+            submitButton.classList.add('loading');
+            submitButton.value = '';
+
+            // Simular processamento
+            setTimeout(() => {
+              try {
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                
+                // Salvar sugestões
+                suggestionsManager.addSuggestion('usernames', username);
+                suggestionsManager.addSuggestion('emails', email);
+
+                // Mostrar modal de sucesso
+                showSuccessModal(username, email);
+
+                // Limpar formulário
+                registerForm.reset();
+                
+                // Remove a classe 'submitted'
+                inputFields.forEach(field => {
+                  field.classList.remove('submitted');
+                });
+                terms.classList.remove('submitted');
+                formSubmitted = false;
+
+                // Fechar sugestões
+                usernameSuggestions.classList.remove('active');
+                emailSuggestions.classList.remove('active');
+
+              } catch (error) {
+                alert('Erro ao realizar cadastro: ' + error.message);
+              } finally {
+                submitButton.classList.remove('loading');
+                submitButton.value = 'Criar conta';
+              }
+            }, 1500);
+          }
+        });
+      }
+
+      // Funções de validação
+      function clearErrors() {
+        const errorMessages = document.querySelectorAll('.error-message');
+        const errorFields = document.querySelectorAll('.input-field.error');
+
+        errorMessages.forEach(msg => msg.textContent = '');
+        errorFields.forEach(field => {
+          field.classList.remove('error');
+          if (formSubmitted) {
+            field.classList.add('submitted');
+          }
+        });
+      }
+
+      function validateForm() {
+        let isValid = true;
+
+        const username = document.getElementById('username');
+        const usernameError = document.getElementById('username-error');
+        if (!username.value.trim()) {
+          usernameError.textContent = 'Nome de usuário é obrigatório';
+          username.classList.add('error');
+          isValid = false;
+        } else if (username.value.trim().length < 3) {
+          usernameError.textContent = 'Nome de usuário deve ter pelo menos 3 caracteres';
+          username.classList.add('error');
+          isValid = false;
+        }
+
+        const email = document.getElementById('email');
+        const emailError = document.getElementById('email-error');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email.value.trim()) {
+          emailError.textContent = 'E-mail é obrigatório';
+          email.classList.add('error');
+          isValid = false;
+        } else if (!emailRegex.test(email.value.trim())) {
+          emailError.textContent = 'Por favor, insira um e-mail válido';
+          email.classList.add('error');
+          isValid = false;
+        }
+
+        const password = document.getElementById('password');
+        const passwordError = document.getElementById('password-error');
+        if (!password.value) {
+          passwordError.textContent = 'Senha é obrigatória';
+          password.classList.add('error');
+          isValid = false;
+        } else if (password.value.length < 6) {
+          passwordError.textContent = 'Senha deve ter pelo menos 6 caracteres';
+          password.classList.add('error');
+          isValid = false;
+        }
+
+        const terms = document.getElementById('terms');
+        if (!terms.checked) {
+          alert('Você deve concordar com os Termos de Serviço e Política de Privacidade');
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      // Mostrar modal de sucesso
+      function showSuccessModal(username, email) {
+        userDataDisplay.innerHTML = `
+          <strong>👤 Usuário:</strong> ${username}<br>
+          <strong>📧 E-mail:</strong> ${email}<br>
+          <strong>📅 Cadastrado em:</strong> ${new Date().toLocaleString('pt-BR')}
+        `;
+        successModal.classList.add('active');
+      }
+
+      // Fechar modal
+      if (modalClose) {
+        modalClose.addEventListener('click', function () {
+          successModal.classList.remove('active');
+        });
+      }
+
+      // Novo cadastro
+      if (newRegisterBtn) {
+        newRegisterBtn.addEventListener('click', function () {
+          successModal.classList.remove('active');
+          registerForm.reset();
+          clearErrors();
+        });
+      }
+
+      // Fechar modal clicando fora
+      window.addEventListener('click', function (e) {
+        if (e.target === successModal) {
+          successModal.classList.remove('active');
+        }
+      });
+
+      // Indicador de força da senha e dicas
+      function updatePasswordStrength(password) {
+        const strengthBars = document.querySelectorAll('.strength-bar');
+        const strengthText = document.getElementById('strengthText');
+        const tipLength = document.getElementById('tip-length');
+        const tipUppercase = document.getElementById('tip-uppercase');
+        const tipNumber = document.getElementById('tip-number');
+        const tipSpecial = document.getElementById('tip-special');
+
+        let strength = 0;
+        const checks = {
+          length: password.length >= 6,
+          uppercase: password.match(/[A-Z]/),
+          number: password.match(/[0-9]/),
+          special: password.match(/[^a-zA-Z0-9]/)
+        };
+
+        if (checks.length) strength++;
+        if (checks.uppercase) strength++;
+        if (checks.number) strength++;
+        if (checks.special) strength++;
+
+        strengthBars.forEach((bar, index) => {
+          bar.classList.remove('active', 'weak', 'medium', 'strong');
+          if (index < strength) {
+            bar.classList.add('active');
+            if (strength <= 1) bar.classList.add('weak');
+            else if (strength === 2) bar.classList.add('medium');
+            else bar.classList.add('strong');
+          }
+        });
+
+        if (strength === 0) strengthText.textContent = 'Fraca';
+        else if (strength <= 2) strengthText.textContent = 'Média';
+        else strengthText.textContent = 'Forte';
+
+        tipLength.querySelector('i').className = `bx ${checks.length ? 'bx-check met' : 'bx-x not-met'}`;
+        tipUppercase.querySelector('i').className = `bx ${checks.uppercase ? 'bx-check met' : 'bx-x not-met'}`;
+        tipNumber.querySelector('i').className = `bx ${checks.number ? 'bx-check met' : 'bx-x not-met'}`;
+        tipSpecial.querySelector('i').className = `bx ${checks.special ? 'bx-check met' : 'bx-x not-met'}`;
+      }
+
+      passwordField.addEventListener('focus', function () {
+        passwordTips.classList.add('active');
+        updatePasswordStrength(this.value);
+      });
+
+      passwordField.addEventListener('blur', function () {
+        if (!this.value) passwordTips.classList.remove('active');
+      });
+
+      passwordField.addEventListener('input', function () {
+        updatePasswordStrength(this.value);
+      });
+
+      // Validação em tempo real
+      inputFields.forEach(field => {
+        field.addEventListener('blur', function () {
+          validateField(this);
+        });
+
+        field.addEventListener('input', function () {
+          if (this.classList.contains('error')) {
+            const fieldId = this.id;
+            const errorElement = document.getElementById(`${fieldId}-error`);
+            if (errorElement) errorElement.textContent = '';
+            this.classList.remove('error');
+          }
+        });
+      });
+
+      function validateField(field) {
+        const fieldId = field.id;
+        const value = field.value.trim();
+        const errorElement = document.getElementById(`${fieldId}-error`);
+
+        if (!errorElement) return;
+
+        switch (fieldId) {
+          case 'username':
+            if (!value) {
+              errorElement.textContent = 'Nome de usuário é obrigatório';
+              field.classList.add('error');
+            } else if (value.length < 3) {
+              errorElement.textContent = 'Nome de usuário deve ter pelo menos 3 caracteres';
+              field.classList.add('error');
+            }
+            break;
+          case 'email':
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!value) {
+              errorElement.textContent = 'E-mail é obrigatório';
+              field.classList.add('error');
+            } else if (!emailRegex.test(value)) {
+              errorElement.textContent = 'Por favor, insira um e-mail válido';
+              field.classList.add('error');
+            }
+            break;
+          case 'password':
+            if (!value) {
+              errorElement.textContent = 'Senha é obrigatória';
+              field.classList.add('error');
+            } else if (value.length < 6) {
+              errorElement.textContent = 'Senha deve ter pelo menos 6 caracteres';
+              field.classList.add('error');
+            }
+            break;
+        }
+      }
+
+      // Botões de redes sociais
+      if (googleRegisterBtn) {
+        googleRegisterBtn.addEventListener('click', function() {
+          this.classList.add('loading');
+          setTimeout(() => {
+            alert('Cadastro com Google - Em desenvolvimento');
+            this.classList.remove('loading');
+          }, 1000);
+        });
+      }
+
+      if (microsoftRegisterBtn) {
+        microsoftRegisterBtn.addEventListener('click', function() {
+          this.classList.add('loading');
+          setTimeout(() => {
+            alert('Cadastro com Microsoft - Em desenvolvimento');
+            this.classList.remove('loading');
+          }, 1000);
+        });
+      }
+
+      // Função para desenvolvedores: limpar sugestões
+      window.clearSuggestions = function() {
+        if (confirm('Limpar todas as sugestões salvas?')) {
+          suggestionsManager.clearSuggestions();
+          alert('Sugestões limpas!');
+        }
+      };
+
+      console.log('💡 Dica: Use clearSuggestions() no console para limpar as sugestões salvas');
+    });
+  </script>
+</body>
+</html>
